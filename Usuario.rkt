@@ -1,6 +1,6 @@
 #lang racket
 
-(provide User User?)
+(provide User User? getUserId getUserName getUserPassword getUserReputation)
 
 
 ; Constructor de TDA Usuario
@@ -15,7 +15,7 @@
     (if (and
          (list? user)
          (number? (getUserId user))
-         (string? (getUsername user))
+         (string? (getUserName user))
          (string? (getUserPassword user))
          (number? (getUserReputation user)))
         #t
@@ -27,7 +27,7 @@
 (define (getUserId user)
   (car user))
 
-(define (getUsername user)
+(define (getUserName user)
   (cadr user))
 
 (define (getUserPassword user)
@@ -39,7 +39,20 @@
 
 ; Funciones modificadoras
 
+(define (setUserId user newId)
+  (list newId (getUserName user)(getUserPassword user)(getUserReputation user)))
 
+
+(define (setUserName user newUserName)
+  (list  (getUserId user) newUserName (getUserPassword user)(getUserReputation user)))
+
+
+(define (setUserPassword user newUserPassword)
+  (list (getUserId user)(getUserName user)newUserPassword (getUserReputation user)))
+
+
+(define (setUserReputation user newUserReputation)
+  (list (getUserId user)(getUserName user) (getUserPassword user) newUserReputation))
 
 ; Sección de usuarios de prueba (predefinidos).
 
