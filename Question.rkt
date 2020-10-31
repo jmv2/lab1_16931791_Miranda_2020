@@ -1,5 +1,6 @@
 #lang racket
-
+(require "otrasFunciones.rkt")
+(provide Question?)
 ;TDA Question
 
 (define (Question questionId ownerId date questionBody tag)
@@ -9,12 +10,13 @@
        (and (list? date)(= 3 (length date)))
        (and (string? questionBody))
        (and (list? tag)))
-       (list questionId ownerId date questionBody tag)
+       (cons "Q" (cons questionId (cons ownerId (cons date (cons questionBody (cons tag null))))))
       '()))
 
 ;Pertenencia
 
-(define (Question? question)(list? question))
+(define (Question? question)
+  (and (list? question)(= length 6)(equal? "Q" (car question))))
   
 
 ;Selectores
@@ -32,7 +34,7 @@
   (cadddr question))
 
 (define (getQuestionTag question)
-  (car (reverse question)))
+  (car (myReverse question)))
 
 ;Modificadoras
 

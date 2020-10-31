@@ -1,26 +1,25 @@
 #lang racket
 
+(require "otrasFunciones.rkt")
 (provide User User? getUserId getUserName getUserPassword getUserReputation)
 
 
 ; Constructor de TDA Usuario
 
 (define (User id username password reputation)
-  (list id username password reputation))
-
+  (if (and
+       (string? username)
+       (and (number? id) (> id 0))
+       (and (string? password) (not (equal? username password)))
+       (and (number? reputation) (>= reputation 0)))
+       (cons "U" (cons id (cons username (cons password (cons reputation null)))))
+       '()))
+      
 
 ; Función de pertencia
 
 (define (User? user)
-    (if (and
-         (list? user)
-         (number? (getUserId user))
-         (string? (getUserName user))
-         (string? (getUserPassword user))
-         (number? (getUserReputation user)))
-        #t
-        #f))
-
+  (and (list? user)(= 5 (length user))(equal? "U" (car user))))
 
 ; Funciones selectoras
 
@@ -40,19 +39,20 @@
 ; Funciones modificadoras
 
 (define (setUserId user newId)
-  (list newId (getUserName user)(getUserPassword user)(getUserReputation user)))
+  (User
+   newId (getUserName user)(getUserPassword user)(getUserReputation user)))
 
 
 (define (setUserName user newUserName)
-  (list  (getUserId user) newUserName (getUserPassword user)(getUserReputation user)))
+  (User  (getUserId user) newUserName (getUserPassword user)(getUserReputation user)))
 
 
 (define (setUserPassword user newUserPassword)
-  (list (getUserId user)(getUserName user)newUserPassword (getUserReputation user)))
+  (User (getUserId user)(getUserName user)newUserPassword (getUserReputation user)))
 
 
 (define (setUserReputation user newUserReputation)
-  (list (getUserId user)(getUserName user) (getUserPassword user) newUserReputation))
+  (User (getUserId user)(getUserName user) (getUserPassword user) newUserReputation))
 
 ; Sección de usuarios de prueba (predefinidos).
 
