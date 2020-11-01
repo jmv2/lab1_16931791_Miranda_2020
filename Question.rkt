@@ -1,7 +1,10 @@
 #lang racket
 (require "otrasFunciones.rkt")
-(provide Question?)
+(provide Question Question?)
 ;TDA Question
+
+
+;Constructor
 
 (define (Question questionId ownerId date questionBody tag)
   (if (and
@@ -16,7 +19,7 @@
 ;Pertenencia
 
 (define (Question? question)
-  (and (list? question)(= length 6)(equal? "Q" (car question))))
+  (and (list? question)(= (length question) 6)(equal? "Q" (car question))))
   
 
 ;Selectores
