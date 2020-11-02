@@ -25,19 +25,19 @@
 ;Selectores
 
 (define (getQuestionId question)
-  (car question))
-
-(define (getOwnerQuestionId question)
   (cadr question))
 
-(define (getDateQuestion question)
+(define (getOwnerQuestionId question)
   (caddr question))
 
-(define (getQuestionBody question)
+(define (getDateQuestion question)
   (cadddr question))
 
-(define (getQuestionTag question)
+(define (getQuestionBody question)
   (car (myReverse question)))
+
+(define (getQuestionTag question)
+  (cdr (myReverse question)))
 
 ;Modificadoras
 

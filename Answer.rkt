@@ -1,6 +1,7 @@
 #lang racket
 
 (require "otrasFunciones.rkt")
+(provide Answer Answer?)
 
 ; TDA Answer
 
@@ -14,6 +15,17 @@
                 (list? dateAnswer)
                 (list? tagAnswer)
                 (string? bodyAnswer))
-               (cons "Q" (cons idAnswer (cons idQuestion (cons idUser (cons dateAnswer (cons tagAnswer (cons bodyAnswer null)))))))
+               (cons "A" (cons idAnswer (cons idQuestion (cons idUser (cons dateAnswer (cons tagAnswer (cons bodyAnswer null)))))))
                '())))
 
+
+;Pertenecia
+
+(define (Answer? answer)
+  (and (list? answer)(= 7 (length answer))(equal? "A" (car answer))))
+
+
+;Selectores
+
+(define (get-idQuestion answer)
+  (cadr answer))

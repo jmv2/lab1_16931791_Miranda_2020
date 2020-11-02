@@ -24,7 +24,7 @@
 ; Funciones selectoras
 
 (define (getUserId user)
-  (car user))
+  (cadr user))
 
 (define (getUserName user)
   (cadr user))
