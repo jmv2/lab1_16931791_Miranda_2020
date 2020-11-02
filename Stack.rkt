@@ -25,12 +25,14 @@
   (lambda (stack)
     (generic-filter User? stack)))
 
-
-(define get-user-by-id
-  (lambda (stack id)
-    (generic-filter
-     (lambda (uid) (= uid (getUserId (get-users-stack stack))))
-     (get-users-stack stack))))
+(define getUserById
+    (lambda (userId stack)
+      (generic-filter
+       (lambda (lista) (= (getUserId lista) userId))
+       (get-users-stack stack)
+      )
+    )
+ )
 
 
 (define get-questions-stack
