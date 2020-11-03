@@ -27,13 +27,13 @@
   (cadr user))
 
 (define (getUserName user)
-  (cadr user))
-
-(define (getUserPassword user)
   (caddr user))
 
-(define (getUserReputation user)
+(define (getUserPassword user)
   (cadddr user))
+
+(define (getUserReputation user)
+  (car (reverse user)))
 
 
 ; Funciones modificadoras

@@ -1,6 +1,8 @@
 #lang racket
 
-(require "User.rkt" "Main.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
+(require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
+(provide Stack Stack? get-users-stack getUserById getUserByName)
+(provide stackCompleto)
 
 ; TDA Stack
 (define voidStack null)
@@ -25,14 +27,15 @@
   (lambda (stack)
     (generic-filter User? stack)))
 
-(define getUserById
-    (lambda (userId stack)
-      (generic-filter
-       (lambda (lista) (= (getUserId lista) userId))
-       (get-users-stack stack)
-      )
-    )
- )
+(define (getUserById userId stack)
+    (filter
+     (lambda (lista) (= (getUserId lista) userId))
+     (get-users-stack stack)))
+
+(define (getUserByName userName stack)
+    (filter
+     (lambda (lista) (equal? (getUserName lista) userName))
+     (get-users-stack stack)))
 
 
 (define get-questions-stack
