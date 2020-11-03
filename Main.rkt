@@ -14,4 +14,4 @@
       (Stack (User 1 username password 0) stack)
       (if (userExists? stack username)
           stack
-          (Stack (User (length (get-users-stack stack)) username password 0) stack))))
+          (Stack (User (+ 1 (length (get-users-stack stack))) username password 0) stack))))

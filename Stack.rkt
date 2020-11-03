@@ -6,6 +6,8 @@
 
 ; TDA Stack
 (define voidStack null)
+
+
 ; constructor
 (define Stack
   (lambda (stackElement stack)
@@ -53,7 +55,7 @@
 ;usuarios de prueba
 (define u1 (User 1 "usuario1" "pass1" 10))
 (define u2 (User 2 "usuario2" "pass2" 20))
-(define u3 (User 3 "usuario2" "pass2" 30))
+(define u3 (User 3 "usuario3" "pass3" 30))
 ;pregutas de prueba
 (define q1 (Question 1 1 (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3")))
 (define q2 (Question 2 2 (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3")))
