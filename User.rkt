@@ -1,25 +1,26 @@
 #lang racket
 
 (require "otrasFunciones.rkt")
-(provide User User? getUserId getUserName getUserPassword getUserReputation)
+(provide User User? getUserId getUserName getUserPassword getUserReputation getUserActiveSession setUserActiveSession)
 
 
 ; Constructor de TDA Usuario
 
-(define (User id username password reputation)
+(define (User id username password reputation activeSession)
   (if (and
        (string? username)
        (and (number? id) (> id 0))
        (and (string? password) (not (equal? username password)))
-       (and (number? reputation) (>= reputation 0)))
-       (cons "U" (cons id (cons username (cons password (cons reputation null)))))
-       '()))
+       (and (number? reputation) (>= reputation 0))
+       (and (boolean? activeSession)))
+       (cons "U" (cons id (cons username (cons password (cons reputation (cons activeSession null))))))
+       null))
       
 
 ; Función de pertencia
 
 (define (User? user)
-  (and (list? user)(= 5 (length user))(equal? "U" (car user))))
+  (and (list? user)(= 6 (length user))(equal? "U" (car user))))
 
 ; Funciones selectoras
 
@@ -33,8 +34,10 @@
   (cadddr user))
 
 (define (getUserReputation user)
-  (car (reverse user)))
-
+  (cadr (reverse user)))
+ 
+(define (getUserActiveSession user)
+  (car (myReverse user)))
 
 ; Funciones modificadoras
 
@@ -54,7 +57,11 @@
 (define (setUserReputation user newUserReputation)
   (User (getUserId user)(getUserName user) (getUserPassword user) newUserReputation))
 
+(define (setUserActiveSession user newUserActiveSession)
+  (User (getUserId user)(getUserName user) (getUserPassword user)(getUserReputation user) newUserActiveSession))
+
 ; Sección de usuarios de prueba (predefinidos).
 
 (define pruebaUsuario01
-  (User 1 "user01" "pass01" 10))
+  (User 1 "user01" "pass01" 10 #f))
+

@@ -1,7 +1,7 @@
 #lang racket
 
 (require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
-(provide Stack Stack? get-users-stack getUserById getUserByName getUsernamePassword)
+(provide Stack Stack? get-users-stack getUserById getUserByName getUsernamePassword userActive?)
 (provide stackCompleto)
 
 ; TDA Stack
@@ -9,6 +9,7 @@
 
 
 ; constructor
+
 (define Stack
   (lambda (stackElement stack)
     (if (or (User? stackElement)(Question? stackElement)(Answer? stackElement))
@@ -50,6 +51,12 @@
   (getUserPassword (getUserByName username stack)))
 
 
+;Función que retorna si un usuario tiene sesión activa en el stack
+(define userActive?
+  (lambda (username stack)
+    (getUserActiveSession (getUserByName username stack))))
+              
+
 
 (define get-questions-stack
   (lambda (stack)
@@ -59,14 +66,25 @@
   (lambda (stack)
     (generic-filter Answer? stack)))
 
+; Modificadores
+
+(define removeUserStack
+  (lambda (username stack)
+    (quitarElementoLista stack (getUserByName username stack))))
+
+(define set-user-active
+  (lambda (stack username active)
+    (Stack (setUserActiveSession (getUserByName username stack) active) (removeUserStack username stack))))
+  
+
 
 
 ; ==========Definiciones para prueba ========================
 
 ;usuarios de prueba
-(define u1 (User 1 "usuario1" "pass1" 10))
-(define u2 (User 2 "usuario2" "pass2" 20))
-(define u3 (User 3 "usuario3" "pass3" 30))
+(define u1 (User 1 "usuario1" "pass1" 10 #f))
+(define u2 (User 2 "usuario2" "pass2" 20 #f))
+(define u3 (User 3 "usuario3" "pass3" 30 #t))
 ;pregutas de prueba
 (define q1 (Question 1 1 (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3")))
 (define q2 (Question 2 2 (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3")))

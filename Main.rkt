@@ -14,7 +14,7 @@
       (Stack (User 1 username password 0) stack)
       (if (userExists? stack username)
           stack
-          (Stack (User (+ 1 (length (get-users-stack stack))) username password 0) stack))))
+          (Stack (User (+ 1 (length (get-users-stack stack))) username password 0 #f) stack))))
 
 
 (define ask
@@ -34,15 +34,18 @@
 
 (define login
   (lambda (stack username password operation)
-    (if (and (userExists? stack username) (equal? (getUsernamePassword stack username) password))
+    (if (and (userExists? stack username)
+             (equal? (getUsernamePassword stack username) password)
+             (userActive? username stack))
         (lambda (arg1)
           (lambda (arg2)
             (lambda (arg3)
               (operation arg1 arg2 arg3 stack))))
-        "no oper"
+        null
     )
   )
 )
 
-;(Stack (Question 2 70 (date 3 11 2020) "pregunta prueba" (tag 1 1 1)) stackCompleto)
+
 ;((((login stackCompleto "usuario1" "pass1" answer)(date 3 11 2020))5)"mi respuesta")
+;((login stackCompleto "usuario1" "pass1" ask)(date 3 11 2020)"pregunta prueba")

@@ -1,6 +1,6 @@
 #lang racket
 
-(provide myReverse elementFromList date tag add-tail generic-filter)
+(provide myReverse elementFromList date tag add-tail generic-filter quitarElementoLista)
 
 ;Otras funciones complementarias  transversales
 
@@ -44,6 +44,26 @@
                (cons (car l) (generic-filter f (cdr l)))
                (generic-filter f (cdr l))))))
 
+
+;Elimina elemento de lista
+(define (quitarElementoLista L E)
+    (if (null? L)
+        L
+        (if (equal? (car L) E)
+            (cdr L)
+            (cons (car L)(quitarElementoLista (cdr L) E)))))
+
+
+;Modifica elemento de lista
+#|
+(define updateElement
+  (lambda (elemento lista NuevoElemento)
+    (if (null? lista)
+        lista
+        (if (equal? elemento (car lista ))
+            (cons NuevoElemento
+
+|#
 
 (define date
   (lambda (d m a)
