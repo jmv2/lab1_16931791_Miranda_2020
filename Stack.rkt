@@ -1,7 +1,7 @@
 #lang racket
 
 (require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
-(provide Stack Stack? get-users-stack getUserById getUserByName)
+(provide Stack Stack? get-users-stack getUserById getUserByName getUsernamePassword)
 (provide stackCompleto)
 
 ; TDA Stack
@@ -13,9 +13,11 @@
   (lambda (stackElement stack)
     (if (or (User? stackElement)(Question? stackElement)(Answer? stackElement))
         (add-tail stack stackElement)
-        stack )))
-
-            
+        stack
+        )
+    )
+  )
+        
             
 ;Pertenencia
 
@@ -24,20 +26,29 @@
 
 
 ;Selectores
-  
+
+;Función que retorna todos los usuarios registrados dentro del Stack
 (define get-users-stack
   (lambda (stack)
     (generic-filter User? stack)))
 
+;Función que retorna un usuario del stack dado el ID del mismo
 (define (getUserById userId stack)
-    (filter
-     (lambda (lista) (= (getUserId lista) userId))
-     (get-users-stack stack)))
+  (filter
+   (lambda (lista) (= (getUserId lista) userId))
+   (get-users-stack stack)))
+
+;Función que retorna un usuario de un stack
 
 (define (getUserByName userName stack)
-    (filter
-     (lambda (lista) (equal? (getUserName lista) userName))
-     (get-users-stack stack)))
+  (car(filter
+       (lambda (userList) (equal? (getUserName userList) userName))
+       (get-users-stack stack))))
+
+;Función que retorna la contraseña de un usuario dentro de un stack
+(define (getUsernamePassword stack username)
+  (getUserPassword (getUserByName username stack)))
+
 
 
 (define get-questions-stack

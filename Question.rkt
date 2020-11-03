@@ -10,7 +10,7 @@
   (if (and
        (and (number? questionId)(> questionId 0))
        (and (number? ownerId) (> ownerId 0))
-       (and (list? date)(= 3 (length date)))
+       (and (list? date))
        (and (string? questionBody))
        (and (list? tag)))
        (cons "Q" (cons questionId (cons ownerId (cons date (cons questionBody (cons tag null))))))
@@ -71,9 +71,9 @@
    
 ; Preguntas de prueba
 
-(define Qtest1 (Question 1 10 (list 27 10 2020) "¿Qué son las funciones anónimas?" (list "lambda" "anon")))
+(define Qtest1 (Question 1 10  (date 27 10 2020) "¿Qué son las funciones anónimas?" (list "lambda" "anon")))
 
-(define Qtest2 (Question 2 20 (list 17 06 2020) "¿Qué es la recursividad?" (list "recursividad")))
+(define Qtest2 (Question 2 20  (date 17 06 2020) "¿Qué es la recursividad?" (list "recursividad")))
 
 ;La siguiente es una lista malformada
-(define Qtest3 (Question "1" 20 (list 17 06 2020) "¿Qué es la recursividad?" (list "recursividad")))
+(define Qtest3 (Question "1" 20 (date 17 06 2020) "¿Qué es la recursividad?" (list "recursividad")))

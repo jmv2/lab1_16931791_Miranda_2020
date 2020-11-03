@@ -10,7 +10,10 @@
     (lambda (L1 L2)
       (if (null? L1)
           L2
-          (myReverseInterno (cdr L1) (cons (car L1) L2)))))
+          (myReverseInterno (cdr L1) (cons (car L1) L2))
+          )
+      )
+    )
   (myReverseInterno L '()))
 
 
