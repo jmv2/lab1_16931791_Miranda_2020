@@ -29,3 +29,6 @@
 
 (define (get-idQuestion answer)
   (cadr answer))
+
+(define (get-idAnswer answer)
+  (car answer))

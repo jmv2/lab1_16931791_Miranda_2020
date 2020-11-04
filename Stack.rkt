@@ -1,11 +1,12 @@
 #lang racket
 
 (require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
-(provide Stack Stack? get-users-stack getUserById getUserByName getUsernamePassword userActive?)
+(provide Stack Stack? get-users-stack getUserById getUserByName getUsernamePassword userActive? set-user-active)
 (provide stackCompleto)
 
 ; TDA Stack
 (define voidStack null)
+(define voidStack? null?)
 
 
 ; constructor
@@ -39,12 +40,18 @@
    (lambda (lista) (= (getUserId lista) userId))
    (get-users-stack stack)))
 
-;Función que retorna un usuario de un stack
 
-(define (getUserByName userName stack)
-  (car(filter
-       (lambda (userList) (equal? (getUserName userList) userName))
-       (get-users-stack stack))))
+;retorna el usuario solicitado
+
+(define getUserByName
+  (lambda (username stack)
+    (if (voidStack? stack)
+        voidStack
+        (if (equal? (getUserName (car(get-users-stack stack))) username)
+            (car(get-users-stack stack))
+            (getUserByName username (cdr (get-users-stack stack)))))))
+        
+        
 
 ;Función que retorna la contraseña de un usuario dentro de un stack
 (define (getUsernamePassword stack username)
@@ -106,5 +113,5 @@
 (define stackCompleto
   (Stack u1 (Stack q1 (Stack a1 (Stack u2 (Stack q2 (Stack a2 (Stack u3 (Stack q3 (Stack a3 voidStack))))))))))
 
-;"StackOver Flow"
-;stackCompleto
+"StackOver Flow"
+stackCompleto
