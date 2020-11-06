@@ -5,7 +5,7 @@
 
 (define userExists?
   (lambda (username stack)
-    (memberOf (getUserByName username stack) (get-users-stack stack))))
+    (memberOf (get-user-by-name username stack) (get-users-stack stack))))
 
 
 (define (register stack username password)
@@ -27,7 +27,7 @@
 (define answer
   (lambda (Date questionId stack newAnswer)
     ;(idAnswer idQuestion idUser dateAnswer tagAnswer bodyAnswer)
-    (Stack (Answer 1 questionId 60 Date (tag 1 2 3) newAnswer) stack)
+    (list (Answer 1 questionId 60 Date (tag 1 2 3) newAnswer) stack)
     )
   )
 
@@ -36,7 +36,7 @@
 (define login
   (lambda (stack username password operation)
     (if (and (userExists? username stack)
-             (equal? (getUsernamePassword stack username) password)
+             (equal? (get-user-password stack username) password)
              (userActive? username (set-user-active stack username #t)))
              ; forzar a que se inicie la sesión si se cumple que usuario existe
              (operation stack)

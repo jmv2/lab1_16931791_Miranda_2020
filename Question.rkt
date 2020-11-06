@@ -14,7 +14,9 @@
        (and (string? questionBody))
        (and (list? tag)))
        (cons "Q" (cons questionId (cons ownerId (cons date (cons questionBody (cons tag null))))))
-      '()))
+      null
+  )
+)
 
 ;Pertenencia
 
