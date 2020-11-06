@@ -37,17 +37,13 @@
   (lambda (stack username password operation)
     (if (and (userExists? username stack)
              (equal? (getUsernamePassword stack username) password)
-             (userActive? username (set-user-active stack username #t))) ; forzar a que se inicie la sesión si se cumple que usuario existe
-        (lambda (arg1)
-          (lambda (arg2)
-            (lambda (arg3)
-              (operation arg1 arg2 stack arg3 ))))
-        null
+             (userActive? username (set-user-active stack username #t)))
+             ; forzar a que se inicie la sesión si se cumple que usuario existe
+             (operation stack)
+             operation
     )
   )
 )
-
-
 
 ;((((login stackCompleto "usuario1" "pass1" answer)(date 3 11 2020))5)"mi respuesta")
 ;(((login stackCompleto "usuario1" "pass1" ask)(date 3 11 2020))"pregunta de prueba")

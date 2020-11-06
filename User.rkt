@@ -1,7 +1,7 @@
 #lang racket
 
 (require "otrasFunciones.rkt")
-(provide User User? getUserId getUserName getUserPassword getUserReputation getUserActiveSession setUserActiveSession)
+(provide User User? get-userid get-username get-user-password get-user-reputation get-user-active-session setUserActiveSession)
 
 
 ; Constructor de TDA Usuario
@@ -24,44 +24,70 @@
 
 ; Funciones selectoras
 
-(define (getUserId user)
+(define (get-userid user)
   (cadr user))
 
-(define (getUserName user)
+(define (get-username user)
   (caddr user))
 
-(define (getUserPassword user)
+(define (get-user-password user)
   (cadddr user))
 
-(define (getUserReputation user)
+(define (get-user-reputation user)
   (cadr (reverse user)))
  
-(define (getUserActiveSession user)
+(define (get-user-active-session user)
   (car (myReverse user)))
 
 ; Funciones modificadoras
 
-(define (setUserId user newId)
-  (User
-   newId (getUserName user)(getUserPassword user)(getUserReputation user)))
+;Modifica el id del usuario 
+(define set-id 
+  (lambda (user new-id))
+    (User
+      new-id
+      (get-username user)
+      (get-user-password user)
+      (get-user-reputation user)
+      (get-user-active-session user)))
+
+;Modifica el nombre de usuario
+(define set-username
+  (lambda (user new-username)
+    (User
+      (get-userid user) 
+      new-username
+      (get-user-password user)
+      (get-user-reputation user)
+      (get-user-active-session user))))
+
+;Modifica la contraseña del usuario
+(define set-password
+  (lambda (user new-password)
+    (User 
+      (getUserId user)
+      (getUserName user)
+      new-password
+      (getUserReputation user)
+      (get-user-active-session user))))
 
 
-(define (setUserName user newUserName)
-  (User  (getUserId user) newUserName (getUserPassword user)(getUserReputation user)))
+(define set-reputation
+  (lambda (user new-reputation)
+    (User 
+      (getUserId user)
+      (getUserName user)
+      (getUserPassword user) 
+      new-reputation
+      (get-user-active-session user)))
+    
+;Función que cambia el estado de sesión del usuario en el Stack
 
-
-(define (setUserPassword user newUserPassword)
-  (User (getUserId user)(getUserName user)newUserPassword (getUserReputation user)))
-
-
-(define (setUserReputation user newUserReputation)
-  (User (getUserId user)(getUserName user) (getUserPassword user) newUserReputation))
-
-(define (setUserActiveSession user newUserActiveSession)
-  (User (getUserId user)(getUserName user) (getUserPassword user)(getUserReputation user) newUserActiveSession))
-
-; Sección de usuarios de prueba (predefinidos).
-
-(define pruebaUsuario01
-  (User 1 "user01" "pass01" 10 #f))
-
+(define set-session
+  (lambda (user new-state)
+    (User 
+      (getUserId user)
+      (getUserName user)
+      (getUserPassword user)
+      (getUserReputation user)
+      new-state)))
