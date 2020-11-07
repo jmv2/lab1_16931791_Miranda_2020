@@ -16,52 +16,34 @@
         (and (number? reputation) (>= reputation 0))
         (and (boolean? activeSession)))
         (cons "U" (cons id (cons username (cons password (cons reputation (cons activeSession null))))))
-        null
-    )
-  )
-)
+        null )))
 
 ; Función de pertencia
 
 (define (User? user)
-  (and 
-    (list? user)
-    (= 6 (length user))
-    (equal? "U" (car user))
-  )
-)
+  (and (list? user)(= 6 (length user))(equal? "U" (car user))))
 
 ; Funciones selectoras
 
 (define get-userid
   (lambda (user)
-    (cadr user)
-  )
-)
+    (cadr user)))
 
 (define get-username
   (lambda (user)
-    (caddr user)
-  )
-)
+    (caddr user)))
 
 (define get-user-password
   (lambda (user)
-    (cadddr user)
-  )
-)
+    (cadddr user)))
 
 (define get-user-reputation
   (lambda (user)
-    (cadr (reverse user))
-  )
-)
+    (cadr (reverse user))))
  
 (define get-user-active-session
   (lambda (user)
-    (car (myReverse user))
-  )
-)
+    (car (myReverse user))))
 
 
 ; Funciones modificadoras
@@ -74,10 +56,7 @@
       (get-username user)
       (get-user-password user)
       (get-user-reputation user)
-      (get-user-active-session user)
-    )
-  )
-)
+      (get-user-active-session user))))
 
 ;Modifica el nombre de usuario
 (define set-username
@@ -87,10 +66,7 @@
       new-username
       (get-user-password user)
       (get-user-reputation user)
-      (get-user-active-session user)
-    )
-  )
-)
+      (get-user-active-session user))))
 
 ;Modifica la contraseña del usuario
 (define set-password
@@ -100,10 +76,7 @@
       (get-username user)
       new-password
       (get-user-reputation user)
-      (get-user-active-session user)
-    )
-  )
-)
+      (get-user-active-session user))))
 
 
 (define set-reputation
@@ -113,10 +86,7 @@
       (get-username user)
       (get-user-password user) 
       new-reputation
-      (get-user-active-session user)
-    )
-  )
-)
+      (get-user-active-session user))))
     
 ;Función que cambia el estado de sesión del usuario en el Stack
 
@@ -127,7 +97,4 @@
       (get-username user)
       (get-user-password user)
       (get-user-reputation user)
-      new-state
-    )
-  )
-)
+      new-state)))

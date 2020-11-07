@@ -10,10 +10,7 @@
     (lambda (L1 L2)
       (if (null? L1)
           L2
-          (myReverseInterno (cdr L1) (cons (car L1) L2))
-          )
-      )
-    )
+          (myReverseInterno (cdr L1) (cons (car L1) L2)))))
   (myReverseInterno L '()))
 
 
@@ -23,8 +20,7 @@
     (if (= E S)
      (car L)
      (elementFromListInternal (cdr L) E (+ 1 S))))
-    (elementFromListInternal L E 1)
-  )
+    (elementFromListInternal L E 1))
 
 
 ;Agrega un elemento E al final (cola) de una lista L
@@ -57,12 +53,12 @@
 ;Verifica si el elemento E pertenece a la lista L
 
 (define memberOf
-  (lambda (E L)
+  (lambda (L E)
     (if (null? L)
         #f
         (if (equal? (car L) E)
             #t
-            (memberOf E (cdr L))))))
+            (memberOf (cdr L) E)))))
 
 
 (define date
