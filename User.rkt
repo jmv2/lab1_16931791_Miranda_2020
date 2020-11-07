@@ -3,7 +3,7 @@
 (require "otrasFunciones.rkt")
 (provide User User? get-userid get-username get-user-password get-user-reputation get-user-active-session)
 (provide set-id set-password set-reputation set-session set-username)
-
+(define default-reward-offered 10)
 
 ; Constructor de TDA Usuario
 
@@ -15,13 +15,13 @@
         (and (string? password) (not (equal? username password)))
         (and (number? reputation) (>= reputation 0))
         (and (boolean? activeSession)))
-        (cons "U" (cons id (cons username (cons password (cons reputation (cons activeSession null))))))
+        (cons "U" (cons id (cons username (cons password (cons reputation (cons default-reward-offered (cons activeSession null)))))))
         null )))
 
 ; Función de pertencia
 
 (define (User? user)
-  (and (list? user)(= 6 (length user))(equal? "U" (car user))))
+  (and (list? user)(= 7 (length user))(equal? "U" (car user))))
 
 ; Funciones selectoras
 
@@ -38,6 +38,10 @@
     (cadddr user)))
 
 (define get-user-reputation
+  (lambda (user)
+    (caddr (reverse user))))
+
+(define get-user-reward
   (lambda (user)
     (cadr (reverse user))))
  

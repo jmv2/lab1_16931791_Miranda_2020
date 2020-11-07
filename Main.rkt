@@ -1,7 +1,8 @@
 #lang racket
 
 (require "User.rkt" "Stack.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
-
+(define default-reward 0);  al momento de crear un nueva pregunta su recomensa es 0
+(define default-active-session #f); al momento de crear un usuario el estado de su sesión en inactivo: #f
 
 (define userExists?
   (lambda (stack username)
@@ -12,7 +13,7 @@
 
 (define (register stack username password)
   (if (null? stack)
-      (Stack (User 1 username password 0) stack)
+      (Stack stack (User 1 username password 0 default-active-session))
       (if (userExists? stack username)
           stack
           (Stack stack (User (+ 1 (length (get-users-stack stack))) username password 0 #f)))))
@@ -21,34 +22,37 @@
 (define login
   (lambda (stack username password operation)
     (if (and (userExists? stack username)
-             (equal? (get-user-password stack username) password)
-             (userActive? username (set-user-active stack username #t)))
-             ; forzar a que se inicie la sesión si se cumple que usuario existe
-             (operation stack)
-             operation)))
-
-;((((login stackCompleto "usuario1" "pass1" answer)(date 3 11 2020))5)"mi respuesta")
-;(((login stackCompleto "usuario1" "pass1" ask)(date 3 11 2020))"pregunta de prueba")
+             (equal? (get-user-by-password stack username) password))
+        ; forzar a que se inicie la sesión si se cumple que usuario existe
+        (operation (set-user-active stack username #t))
+        "login fail")))
 
 
 
 (define ask
-  (lambda (stack-actualizado)
+  (lambda (stack)
     (lambda (fecha-pregunta)
       (lambda (pregunta e1 e2 e3) ; Para respetar el formato del ejemplo
-        (list stack-actualizado fecha-pregunta pregunta (list e1 e2 e3))))))
+        (set-user-active
+         (Stack stack
+         (Question
+          (+ 1 (length (get-questions-stack stack)))
+          (get-userid (user-active stack))
+          fecha-pregunta
+          pregunta
+          (tag e1 e2 e3) default-reward))
+         (get-username (user-active stack))
+         #f)))))
 
 
-;Aquí como se usa la función "ask"
-;(((login "user" "pass" "stack" ask) (date 5 11 2020))"pregunta 1" "etiqueta 1" "etiqueta 2" "etiqueta 3")
 
 
-;Aquí lo haré con la notacón normal
+(define reward
+  (lambda (stack)
+    (lambda (id-question)
+      (lambda (reward-question)
+        (
 
-(define (reward stack) ; Este es el argumento principal, con el cual es ejecutado desde login
-  (lambda (id-pregunta) ; Este es el primer argumento curry, que se coloca fuera el parentesis
-    (lambda (recompensa) ; El segundo argumento fuera del segundo parentesis
-      (list stack id-pregunta recompensa))))
 
 ; En acción la función reward
 ;(((login "user" "pass" "stack" reward) 60) 1000)
