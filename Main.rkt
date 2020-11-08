@@ -30,14 +30,14 @@
              (equal? (get-user-by-password stack username) password))
         ; forzar a que se inicie la sesión si se cumple que usuario existe
         (operation (set-user-active stack username #t))
-        "login fail")))
+        operation )))
 
 
 
 (define ask
   (lambda (stack)
     (lambda (fecha-pregunta)
-      (lambda (pregunta e1 e2 e3) ; Para respetar el formato del ejemplo
+      (lambda (pregunta . labels)
         (logout
          (Stack stack
             (Question
@@ -45,7 +45,7 @@
               (get-userid (user-active stack))
               fecha-pregunta
               pregunta
-              (tag e1 e2 e3)
+              labels
               default-reward)))))))
 
 
@@ -56,8 +56,16 @@
     (lambda (id-question)
       (lambda (reward-question)
         (if (<= reward-question (get-user-reputation (user-active stack)))
-            #t
-            #f)))))
+            (logout
+             (Stack
+              (remove-from-stack
+               (Stack
+                (remove-from-stack stack (user-active stack))
+                (set-reward-offer (user-active stack) reward-question))
+               (get-question-by-id stack id-question))
+               (set-question-reward (get-question-by-id stack id-question) reward-question)))
+            stack)))))
+            
             ;(Stack
              ;(set-user-offer stack (get-userid (user-active stack)) reward-question))
             ;(remove-from-stack stack (user-active stack)))))))
