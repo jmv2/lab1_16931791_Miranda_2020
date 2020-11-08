@@ -41,13 +41,13 @@
                (generic-filter f (cdr l))))))
 
 
-;Elimina elemento de lista
+;Elimina elemento E de lista L
 (define (quitarElementoLista L E)
     (if (null? L)
         L
         (if (equal? (car L) E)
             (cdr L)
-            (cons (car L)(quitarElementoLista (cdr L) E)))))
+            (cons (car L) (quitarElementoLista (cdr L) E)))))
 
 
 ;Verifica si el elemento E pertenece a la lista L

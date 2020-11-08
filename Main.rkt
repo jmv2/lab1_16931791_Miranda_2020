@@ -4,6 +4,11 @@
 (define default-reward 0);  al momento de crear un nueva pregunta su recomensa es 0
 (define default-active-session #f); al momento de crear un usuario el estado de su sesión en inactivo: #f
 
+(define logout
+  (lambda (stack)
+    (set-user-active stack (get-username (user-active stack)) #f )))
+    
+
 (define userExists?
   (lambda (stack username)
     (memberOf
@@ -33,16 +38,15 @@
   (lambda (stack)
     (lambda (fecha-pregunta)
       (lambda (pregunta e1 e2 e3) ; Para respetar el formato del ejemplo
-        (set-user-active
+        (logout
          (Stack stack
-         (Question
-          (+ 1 (length (get-questions-stack stack)))
-          (get-userid (user-active stack))
-          fecha-pregunta
-          pregunta
-          (tag e1 e2 e3) default-reward))
-         (get-username (user-active stack))
-         #f)))))
+            (Question
+              (+ 1 (length (get-questions-stack stack)))
+              (get-userid (user-active stack))
+              fecha-pregunta
+              pregunta
+              (tag e1 e2 e3)
+              default-reward)))))))
 
 
 
@@ -51,12 +55,21 @@
   (lambda (stack)
     (lambda (id-question)
       (lambda (reward-question)
-        (
+        (if (<= reward-question (get-user-reputation (user-active stack)))
+            #t
+            #f)))))
+            ;(Stack
+             ;(set-user-offer stack (get-userid (user-active stack)) reward-question))
+            ;(remove-from-stack stack (user-active stack)))))))
+             ;(Stack
+              ;(remove-from-stack stack (get-user-by-id stack (user-active stack)))
+              ;(set-user-offer stack (get-user-by-id stack (user-active stack)) reward-question))
+             ;null)))))
 
-
-; En acción la función reward
-;(((login "user" "pass" "stack" reward) 60) 1000)
-
+;(remove-from-stack stack (get-question-by-id stack id-question) ;Eliminar pregunta
+; ; Eliminar usuario
+;)
+;(set-question-reward (get-question-by-id stack id-question) reward-question)
 
 (define answer
   (lambda (stack-actualizado)

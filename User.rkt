@@ -2,20 +2,19 @@
 
 (require "otrasFunciones.rkt")
 (provide User User? get-userid get-username get-user-password get-user-reputation get-user-active-session)
-(provide set-id set-password set-reputation set-session set-username)
-(define default-reward-offered 10)
+(provide set-id set-password set-reputation set-session set-username set-reward-offer)
 
 ; Constructor de TDA Usuario
 
 (define User
-  (lambda (id username password reputation activeSession)
+  (lambda (id username password reputation reward-offer activeSession)
     (if (and
         (string? username)
         (and (number? id) (> id 0))
         (and (string? password) (not (equal? username password)))
         (and (number? reputation) (>= reputation 0))
         (and (boolean? activeSession)))
-        (cons "U" (cons id (cons username (cons password (cons reputation (cons default-reward-offered (cons activeSession null)))))))
+        (cons "U" (cons id (cons username (cons password (cons reputation (cons reward-offer (cons activeSession null)))))))
         null )))
 
 ; Función de pertencia
@@ -60,6 +59,7 @@
       (get-username user)
       (get-user-password user)
       (get-user-reputation user)
+      (get-user-reward user)
       (get-user-active-session user))))
 
 ;Modifica el nombre de usuario
@@ -70,6 +70,7 @@
       new-username
       (get-user-password user)
       (get-user-reputation user)
+      (get-user-reward user)
       (get-user-active-session user))))
 
 ;Modifica la contraseña del usuario
@@ -80,6 +81,7 @@
       (get-username user)
       new-password
       (get-user-reputation user)
+      (get-user-reward user)
       (get-user-active-session user))))
 
 
@@ -101,4 +103,16 @@
       (get-username user)
       (get-user-password user)
       (get-user-reputation user)
+      (get-user-reward user)
       new-state)))
+
+;Función que cambia la recompensa ofertada
+(define set-reward-offer
+  (lambda (user new-offer)
+    (User
+      (get-userid user)
+      (get-username user)
+      (get-user-password user)
+      (get-user-reputation user)
+      new-offer
+      (get-user-active-session user))))

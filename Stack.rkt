@@ -2,7 +2,8 @@
 
 (require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
 (provide Stack Stack? get-users-stack get-user-by-id get-user-by-name get-user-by-password userActive? get-questions-stack get-answers-stack)
-(provide remove-user-stack set-user-active full-stack user-active)
+(provide set-user-active full-stack user-active set-user-offer)
+(provide get-question-by-id remove-from-stack)
 
 ; TDA Stack
 (define voidStack null)
@@ -109,23 +110,39 @@
 
 ; Modificadores
 
-(define remove-user-stack
-  (lambda (stack username)
-    (quitarElementoLista stack (get-user-by-name stack username))))
+;Elimina un elemento del Stack
+
+(define remove-from-stack
+  (lambda (stack stack-element)
+    (quitarElementoLista stack stack-element)))
+
+;(define remove-user-stack
+ ; (lambda (stack username)
+  ;  (quitarElementoLista stack (get-user-by-name stack username))))
 
 (define set-user-active
   (lambda (stack username active)
     (Stack
-     (remove-user-stack stack username)
-     (set-session (get-user-by-name stack username) active) )))
-  
+     (remove-from-stack stack (get-user-by-name stack username))
+     (set-session (get-user-by-name stack username) active))))
+
+
+(define set-user-offer
+  (lambda (stack user-id new-offer)
+    (Stack
+     (remove-from-stack stack (car (get-user-by-id stack user-id)))
+     (set-reward-offer (car(get-user-by-id stack user-id)) new-offer))))
+
+
+
+
 
 ; ==========Definiciones para prueba ========================
 
 ;usuarios de prueba
-(define u1 (User 1 "usuario1" "pass1" 10 #f))
-(define u2 (User 2 "usuario2" "pass2" 20 #f))
-(define u3 (User 3 "usuario3" "pass3" 30 #f))
+(define u1 (User 1 "usuario1" "pass1" 10 0 #f))
+(define u2 (User 2 "usuario2" "pass2" 20 0 #f))
+(define u3 (User 3 "usuario3" "pass3" 30 0 #f))
 ;pregutas de prueba
 (define q1 (Question 1 1 (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3") 0))
 (define q2 (Question 2 2 (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3") 0))
