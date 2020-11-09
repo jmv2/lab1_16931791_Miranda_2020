@@ -8,14 +8,15 @@
 ; Constructor
 
 (define Answer
-         (λ (idAnswer idQuestion idUser dateAnswer tagAnswer bodyAnswer)
+         (lambda (id-answer id-question author answer-date answer labels)
            (if (and
-                (and (number? idAnswer)(> idAnswer 0))
-                (and (number? idQuestion)(> idQuestion 0))
-                (list? dateAnswer)
-                (list? tagAnswer)
-                (string? bodyAnswer))
-               (cons "A" (cons idAnswer (cons idQuestion (cons idUser (cons dateAnswer (cons tagAnswer (cons bodyAnswer null)))))))
+                (and (number? id-answer)(> id-answer 0))
+                (and (number? id-question)(> id-question 0))
+                (and (string? author))
+                (list? answer-date)
+                (list? labels)
+                (string? answer))
+               (cons "A" (cons id-answer (cons id-question (cons author (cons answer-date (cons answer (cons labels null)))))))
                '())))
 
 
@@ -27,8 +28,17 @@
 
 ;Selectores
 
-(define (get-idQuestion answer)
-  (cadr answer))
+;retora el id de la pregunta
+(define get-answer-questionid
+  (lambda (answer)
+  (cadr answer)))
 
-(define (get-idAnswer answer)
-  (car answer))
+;retornna el id de la respuesta
+(define (get-answer-id answer)
+  (caddr answer))
+
+; retorna el autor de la respuesta
+(define get-answer-author
+  (lambda (answer)
+    (cadddr answer)))
+

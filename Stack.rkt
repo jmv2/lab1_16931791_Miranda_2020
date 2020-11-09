@@ -144,13 +144,13 @@
 (define u2 (User 2 "usuario2" "pass2" 20 0 #f))
 (define u3 (User 3 "usuario3" "pass3" 30 0 #f))
 ;pregutas de prueba
-(define q1 (Question 1 1 (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3") 0))
-(define q2 (Question 2 2 (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3") 0))
-(define q3 (Question 3 3 (date 3 11 2020) "Pregunta 3" (tag  "tag1" "tag2" "tag3") 0))
+(define q1 (Question 1 "usuario1" (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3") 0 #t))
+(define q2 (Question 2 "usuario2" (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3") 0 #t))
+(define q3 (Question 3 "usuario3" (date 3 11 2020) "Pregunta 3" (tag  "tag1" "tag2" "tag3") 0 #t))
 ;respuestas de prueba
-(define a1 (Answer 1 1 1 (date 1 12 2020) (tag  "tag1" "tag2" "tag3") "Respuesta 1"))
-(define a2 (Answer 2 2 2 (date 2 12 2020) (tag  "tag1" "tag2" "tag3") "Respuesta 2"))
-(define a3 (Answer 3 3 3 (date 3 12 2020) (tag  "tag1" "tag2" "tag3") "Respuesta 3"))
+(define a1 (Answer 1 1 "usuario1" (date 1 12 2020) "Respuesta 1" (tag  "tag1" "tag2" "tag3")))
+(define a2 (Answer 2 2 "usuario2" (date 2 12 2020) "Respuesta 2" (tag  "tag1" "tag2" "tag3")))
+(define a3 (Answer 3 3 "usuario3" (date 3 12 2020) "Respuesta 3" (tag  "tag1" "tag2" "tag3")))
 ;stack de prueba
 (define full-stack
   (Stack(Stack(Stack(Stack(Stack(Stack(Stack(Stack(Stack voidStack u1)u2)u3) q1)q2)q3)a1)a2)a3))

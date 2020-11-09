@@ -1,8 +1,8 @@
 #lang racket
 
 (require "otrasFunciones.rkt")
-(provide User User? get-userid get-username get-user-password get-user-reputation get-user-active-session)
-(provide set-id set-password set-reputation set-session set-username set-reward-offer)
+(provide User User? get-userid get-username get-user-password get-user-reputation get-user-reward get-user-active-session)
+(provide set-id set-password set-user-reputation set-session set-username set-reward-offer)
 
 ; Constructor de TDA Usuario
 
@@ -12,7 +12,7 @@
         (string? username)
         (and (number? id) (> id 0))
         (and (string? password) (not (equal? username password)))
-        (and (number? reputation) (>= reputation 0))
+        (and (number? reputation))
         (and (boolean? activeSession)))
         (cons "U" (cons id (cons username (cons password (cons reputation (cons reward-offer (cons activeSession null)))))))
         null )))
@@ -85,12 +85,13 @@
       (get-user-active-session user))))
 
 
-(define set-reputation
+(define set-user-reputation
   (lambda (user new-reputation)
     (User 
       (get-userid user)
       (get-username user)
-      (get-user-password user) 
+      (get-user-password user)
+      (get-user-reward user)
       new-reputation
       (get-user-active-session user))))
     
