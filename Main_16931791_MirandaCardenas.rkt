@@ -111,26 +111,57 @@
         (get-userid user)
         (get-username user)
         (get-user-password user)
-        (- (get-user-reward user)
-           (get-user-reputation user))
+        (- (get-user-reputation user)
+           (get-user-reward user))
         no-offer
         (get-user-active-session user))))))
+
+
+
+(define debtor
+  (lambda (stack id-question)
+    (if (null? stack)
+        stack
+        (if (equal?
+             (get-user-reward (car ( get-users-stack stack)))
+             id-question)
+            (car (get-users-stack stack))
+            (debtor (cdr (get-users-stack stack)) id-question)))))
+
 
 
 (define accept
   (lambda (stack)
     (lambda (id-question)
       (lambda (id-answer)
-        (if (equal? (get-username (user-active stack)) (get-question-author(get-question-by-id stack id-question)))
-            (logout
-             (Stack
-              (Stack
-               (Stack
-                (remove-from-stack stack (get-question-by-id stack id-question))
-                (set-question-state (get-question-by-id stack id-question) question-close)) ;Aqui se da por solucionada la pregunta
-               (payment stack  (get-question-author (get-question-by-id stack id-question))))
-              (remove-from-stack stack (user-active stack))))
-            (logout stack))))))
+        (if (equal? (get-username (user-active stack)) (get-question-author(get-question-by-id stack id-question))) ; Sólo el autor de la pregunta puede continuar
+            (payment  
+             
+                (Stack
+                    (Stack
+                       (remove-from-stack stack (get-question-by-id stack id-question))
+                       (set-question-state (get-question-by-id stack id-question) question-close)
+                    )
+
+                    (remove-from-stack stack (user-active stack))
+                )
+               (get-username (debtor stack (get-question-reward (get-question-by-id stack id-question)))))
+              (logout stack))
+             ))))
+
+
+            ;Aqui se da por solucionada la pregunta
+               ;(payment stack  (get-question-author (get-question-by-id stack id-question))))
+              ;(remove-from-stack stack (user-active stack)))
+            
+            
 
 
 
+(define stack-informe
+  (register
+   (register voidStack "jmiranda" "pass") "acardenas" "pass2"))
+
+(define stack-con-reward
+  (((login full-stack "usuario1" "pass1" reward)2)5))
+  

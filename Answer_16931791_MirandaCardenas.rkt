@@ -1,7 +1,7 @@
 #lang racket
 
 (require "otrasFunciones_16931791_MirandaCardenas.rkt")
-(provide Answer Answer?)
+(provide Answer Answer? get-answer-author)
 
 ; TDA Answer
 

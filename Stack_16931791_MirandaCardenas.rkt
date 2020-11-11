@@ -6,7 +6,7 @@
 (require "otrasFunciones_16931791_MirandaCardenas.rkt")
 
 (provide Stack Stack? get-users-stack get-user-by-id get-user-by-name get-user-by-password userActive? get-questions-stack get-answers-stack)
-(provide set-user-active full-stack user-active set-user-offer)
+(provide set-user-active full-stack user-active set-user-offer )
 (provide get-question-by-id remove-from-stack)
 (provide voidStack) 
 
@@ -70,6 +70,15 @@
               ;(cons (get-username (car (get-users-stack stack)) users))
               (user-active (cdr (get-users-stack stack)))))))
 
+; retorna un usuario con deuda
+(define debtor
+  (lambda (stack id-question)
+    (if (voidStack? stack)
+        stack
+        (if (equal? (get-question-reward (get-question-by-id stack id-question)) (get-user-reward (car (get-users-stack stack))))
+            (car (get-users-stack stack))
+            (debtor (cdr (get-users-stack stack)) id-question)))))
+
 
 ;Función que retorna la contraseña de un usuario dentro de un stack
 (define (get-user-by-password stack username)
@@ -93,7 +102,7 @@
     (filter Question? stack)))
 
 
-; Función que con un id de pregunta, restorna la pregunta completa
+; Función que con un id de pregunta, retorna la pregunta completa
 (define get-question-by-id
   (lambda (stack question-id)
     (if (voidStack? stack)
@@ -123,9 +132,6 @@
   (lambda (stack stack-element)
     (quitarElementoLista stack stack-element)))
 
-;(define remove-user-stack
- ; (lambda (stack username)
-  ;  (quitarElementoLista stack (get-user-by-name stack username))))
 
 (define set-user-active
   (lambda (stack username active)
@@ -151,9 +157,9 @@
 (define u2 (User 2 "usuario2" "pass2" 20 0 #f))
 (define u3 (User 3 "usuario3" "pass3" 30 0 #f))
 ;pregutas de prueba
-(define q1 (Question 1 "usuario1" (date 1 11 2020) "Pregunta 1" (tag  "tag1" "tag2" "tag3") 0 #t))
-(define q2 (Question 2 "usuario2" (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" "tag3") 0 #t))
-(define q3 (Question 3 "usuario3" (date 3 11 2020) "Pregunta 3" (tag  "tag1" "tag2" "tag3") 0 #t))
+(define q1 (Question 1 "usuario1" (date 1 11 2020) "Pregunta 1" (tag  "tag1" ) 15 #t))
+(define q2 (Question 2 "usuario2" (date 2 11 2020) "Pregunta 2" (tag  "tag1" "tag2" ) 0 #t))
+(define q3 (Question 3 "usuario3" (date 3 11 2020) "Pregunta 3" (tag  "tag1" "tag2" "tag3") 45 #t))
 ;respuestas de prueba
 (define a1 (Answer 1 1 "usuario1" (date 1 12 2020) "Respuesta 1" (tag  "tag1" "tag2" "tag3")))
 (define a2 (Answer 2 2 "usuario2" (date 2 12 2020) "Respuesta 2" (tag  "tag1" "tag2" "tag3")))
