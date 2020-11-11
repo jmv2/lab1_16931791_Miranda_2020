@@ -1,6 +1,7 @@
 #lang racket
 
-(require "otrasFunciones.rkt")
+(require "otrasFunciones_16931791_MirandaCardenas.rkt")
+
 (provide User User? get-userid get-username get-user-password get-user-reputation get-user-reward get-user-active-session)
 (provide set-id set-password set-user-reputation set-session set-username set-reward-offer)
 

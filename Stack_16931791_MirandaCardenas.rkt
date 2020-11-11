@@ -1,14 +1,21 @@
 #lang racket
 
-(require "User.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
+(require "User_16931791_MirandaCardenas.rkt")
+(require "Answer_16931791_MirandaCardenas.rkt")
+(require "Question_16931791_MirandaCardenas.rkt")
+(require "otrasFunciones_16931791_MirandaCardenas.rkt")
+
 (provide Stack Stack? get-users-stack get-user-by-id get-user-by-name get-user-by-password userActive? get-questions-stack get-answers-stack)
 (provide set-user-active full-stack user-active set-user-offer)
 (provide get-question-by-id remove-from-stack)
+(provide voidStack) 
 
-; TDA Stack
+; Definiciones estáticas
+
 (define voidStack null)
 (define voidStack? null?)
 
+; TDA Stack
 
 ; constructor
 
@@ -156,4 +163,5 @@
   (Stack(Stack(Stack(Stack(Stack(Stack(Stack(Stack(Stack voidStack u1)u2)u3) q1)q2)q3)a1)a2)a3))
 
   
-"StackOver Flow"
+;"Stack de pruebas"
+;full-stack

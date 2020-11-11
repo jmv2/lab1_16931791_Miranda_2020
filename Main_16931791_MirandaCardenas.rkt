@@ -1,6 +1,11 @@
 #lang racket
 
-(require "User.rkt" "Stack.rkt" "Question.rkt" "Answer.rkt" "otrasFunciones.rkt")
+(require "Stack_16931791_MirandaCardenas.rkt")
+(require "User_16931791_MirandaCardenas.rkt")
+(require "Answer_16931791_MirandaCardenas.rkt")
+(require "Question_16931791_MirandaCardenas.rkt")
+(require "otrasFunciones_16931791_MirandaCardenas.rkt")
+
 (define default-reward 0);  al momento de crear un nueva pregunta su recomensa es 0
 (define default-active-session #f); al momento de crear un usuario el estado de su sesión en inactivo: #f
 (define question-open #t)
@@ -27,10 +32,10 @@
 
 (define (register stack username password)
   (if (null? stack)
-      (Stack stack (User 1 username password 0 default-active-session))
+      (Stack stack (User 1 username password 0 0 default-active-session))
       (if (userExists? stack username)
           stack
-          (Stack stack (User (+ 1 (length (get-users-stack stack))) username password 0 #f)))))
+          (Stack stack (User (+ 1 (length (get-users-stack stack))) username password 0 0 #f)))))
 
 
 (define login
@@ -129,10 +134,3 @@
 
 
 
-;Función que descontará los puntos del usuario y retornará un stack modificado.
-
-     
-
-;(set-reward-offer(set-user-reputation (get-user-by-name stack (get-question-author (get-question-by-id stack id-question))) ; Usuario de la recompensa
- ;                                                    ( - (get-user-reputation (get-user-by-name stack (get-question-author (get-question-by-id stack id-question))))
-  ;                                                       (get-user-reward (get-user-by-name stack (get-question-author (get-question-by-id stack id-question))))))no-offer

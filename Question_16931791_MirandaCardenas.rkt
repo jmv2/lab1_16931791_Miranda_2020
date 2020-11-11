@@ -1,5 +1,7 @@
 #lang racket
-(require "otrasFunciones.rkt")
+
+(require "otrasFunciones_16931791_MirandaCardenas.rkt")
+
 (provide Question Question?  get-question-id get-question-author get-question-date get-question-body get-question-labels get-question-reward)
 (provide set-question-reward set-question-state)
 ;TDA Question
