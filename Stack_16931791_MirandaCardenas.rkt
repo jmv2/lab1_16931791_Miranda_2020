@@ -5,7 +5,7 @@
 (require "Question_16931791_MirandaCardenas.rkt")
 (require "otrasFunciones_16931791_MirandaCardenas.rkt")
 
-(provide Stack Stack? get-users-stack get-user-by-id get-user-by-name get-user-by-password userActive? get-questions-stack get-answers-stack)
+(provide Stack get-users-stack get-user-by-id get-user-by-name get-user-by-password userActive? get-questions-stack get-answers-stack)
 (provide set-user-active full-stack user-active set-user-offer )
 (provide get-question-by-id remove-from-stack)
 (provide voidStack) 
@@ -134,13 +134,16 @@
 
 ; Modificadores
 
-;Elimina un elemento del Stack
-
+;Desc: Elimina un elemento del Stack
+;Dom: stack x stack-element
+;Rec: stack
 (define remove-from-stack
   (lambda (stack stack-element)
     (quitarElementoLista stack stack-element)))
 
-
+;Desc: Función que cambia el estado de un usuario en el stack
+;Dom: string x User
+;Rec: stack
 (define set-user-active
   (lambda (stack username active)
     (Stack
@@ -148,6 +151,9 @@
      (set-session (get-user-by-name stack username) active))))
 
 
+;Desc: Función que configura la oferta de un usuario en el stack
+;Dom: stack x number
+;Rec: stack
 (define set-user-offer
   (lambda (stack user-id new-offer)
     (Stack
@@ -157,7 +163,7 @@
 
 
 
-#|
+
 ; ==========Definiciones para prueba ========================
 
 ;usuarios de prueba
@@ -179,4 +185,3 @@
   
 ;"Stack de pruebas"
 ;full-stack
-#|

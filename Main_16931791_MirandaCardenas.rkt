@@ -180,15 +180,29 @@
             
             
 
+; Funciones de prueba para el informe. Descomentar para realizar las pruebas que están mas abajo
+;(define stack-informe (register (register voidStack "jmiranda" "pass") "acardenas" "pass2"))
 
-#| Funciones de prueba para el informe
+;(define stack-con-reward (((login full-stack "usuario1" "pass1" reward)2)5))
 
-(define stack-informe
-  (register
-   (register voidStack "jmiranda" "pass") "acardenas" "pass2"))
+;Ejemplo de función register
+;(((login full-stack "usuario1" "pass1" reward)2)5)
 
-(define stack-con-reward
-  (((login full-stack "usuario1" "pass1" reward)2)5))
 
-|#
-  
+;(register voidStack "jmiranda" "pass")
+;(register (register voidStack "jmiranda" "pass") "acardenas" "pass2
+
+;Ejemplo de función login
+;(((login "jmiranda" "pass" (((login stack-informe "jmiranda" "pass" ask)(date 10 11 2020))"Pregunta 1"))(date 11 11 2020))"Pregunta 2")
+
+;Ejemplo de función ask
+;(((login stack-informe "jmiranda" "pass" ask)(date 10 11 2020))"Pregunta 1")
+
+;Ejemplo de función reward
+;(((login full-stack "usuario1" "pass1" reward)2)5)
+
+;Ejemplo función answer
+;((((login full-stack "usuario2" "pass2" answer)(date 13 11 2020))3)"Respuesta 4. Sin etiquetas"
+
+;Ejemplo función accept
+;(((login stack-con-reward "usuario2" "pass2" accept)2)1)

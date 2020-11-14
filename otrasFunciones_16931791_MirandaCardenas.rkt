@@ -79,3 +79,5 @@
   (lambda (d m a)
     (cons d (cons m (cons a null)))))
 
+;Desc: Función que crea una lista de tags para unas funciones de prueba
+(define tag list)
