@@ -19,6 +19,9 @@
 
 ; constructor
 
+;Desc: Constructor del TDA stack
+;Dom: stack x (User, Question, Answer)
+;Rec: Stack
 (define Stack
   (lambda (stack stackElement)
     (if (or (User? stackElement)(Question? stackElement)(Answer? stackElement))
@@ -26,22 +29,21 @@
         stack)))
         
             
-;Pertenencia
-
-(define (Stack? stack)
-  (list? stack))
-
-
 ; FUNCIONES SELECTORAS
 
 ;Selectores de usuarios
 
-;Función que retorna todos los usuarios registrados dentro del Stack
+;Desc: Función que retorna todos los usuarios registrados dentro del Stack
+;Dom: Stack
+;Rec: Stack
 (define get-users-stack
   (lambda (stack)
     (filter User? stack)))
 
-;Función que retorna un usuario del stack dado el ID del mismo
+
+;Desc: Función que retorna un usuario del stack dado el ID del mismo
+;Dom: stack x number
+;Rec: stack
 (define get-user-by-id
   (lambda (stack userId)
       (filter
@@ -49,7 +51,9 @@
         (get-users-stack stack))))
 
 
-;retorna el usuario solicitado 
+;Desc: retorna el usuario solicitado 
+;Dom: stack x string
+;Rec: stack
 
 (define get-user-by-name
   (lambda (stack username)
@@ -60,36 +64,35 @@
           (get-user-by-name (cdr (get-users-stack stack)) username)))))
     
 
-; Retorna un usuario activo
+;Desc: Retorna un usuario activo
+;Dom: stack
+;Rec: stack
 (define user-active
     (lambda (stack)
       (if (voidStack? stack)
           voidStack
           (if (userActive? stack (get-username (car (get-users-stack stack))))
               (car (get-users-stack stack))
-              ;(cons (get-username (car (get-users-stack stack)) users))
               (user-active (cdr (get-users-stack stack)))))))
 
-; retorna un usuario con deuda
-(define debtor
-  (lambda (stack id-question)
-    (if (voidStack? stack)
-        stack
-        (if (equal? (get-question-reward (get-question-by-id stack id-question)) (get-user-reward (car (get-users-stack stack))))
-            (car (get-users-stack stack))
-            (debtor (cdr (get-users-stack stack)) id-question)))))
 
-
-;Función que retorna la contraseña de un usuario dentro de un stack
+;Desc: Función que retorna la contraseña de un usuario dentro de un stack
+;Dom: stack x string
+;Rec: stack
 (define (get-user-by-password stack username)
   (get-user-password (get-user-by-name stack username)))
 
-;retorna la reputación de un usuario en el Stack dado su nombre de usuario
+
+;Desc: retorna la reputación de un usuario en el Stack dado su nombre de usuario
+;Dom: stack x string
+;Rec: stack
 (define (get-reputation stack username)
   (get-user-reputation (get-user-by-name stack username)))
 
 
-;Función que retorna si un usuario tiene sesión activa en el stack
+;Desc: Función que retorna si un usuario tiene sesión activa en el stack
+;Dom: stack x string
+;Rec: stack
 (define userActive?
   (lambda (stack username)
     (get-user-active-session (get-user-by-name stack username))))
@@ -97,12 +100,17 @@
 
 ;Selectores de preguntas
 
+;Desc: Función que obtiene un stack con solamente las preguntas dentro de un stack  
+;Dom: stack
+;Rec: stack
 (define get-questions-stack
   (lambda (stack)
     (filter Question? stack)))
 
 
-; Función que con un id de pregunta, retorna la pregunta completa
+;Desc: Función que con un id de pregunta, retorna la pregunta completa
+;Dom: stack x number
+;Rec: Question
 (define get-question-by-id
   (lambda (stack question-id)
     (if (voidStack? stack)
@@ -149,7 +157,7 @@
 
 
 
-
+#|
 ; ==========Definiciones para prueba ========================
 
 ;usuarios de prueba
@@ -171,3 +179,4 @@
   
 ;"Stack de pruebas"
 ;full-stack
+#|

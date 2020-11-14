@@ -4,7 +4,10 @@
 
 ;Otras funciones complementarias  transversales
 
-; Se revierte el orden de los elementos de la lista L
+;Desc: función que dada una lista invierte su orden 
+;Dom: lista
+;Rec: lista
+;Rrecursión: De cola. Motivo: Fue lo mas directo
 (define (myReverse L)
   (define myReverseInterno
     (lambda (L1 L2)
@@ -13,8 +16,10 @@
           (myReverseInterno (cdr L1) (cons (car L1) L2)))))
   (myReverseInterno L '()))
 
-
-; Obtiene el elemento numero E de la lsta L
+;Desc: Función que retorna un elemento de una lista
+;Dom: lista x number
+;Rec: lista
+;Recursión: De cola. Motivo: Fue lo mas directo, es parecido a un contador con un ciclo for
 (define (elementFromList L E)
   (define (elementFromListInternal L E S)
     (if (= E S)
@@ -23,15 +28,20 @@
     (elementFromListInternal L E 1))
 
 
-;Agrega un elemento E al final (cola) de una lista L
+;Desc: Agrega un elemento E al final (cola) de una lista L
+;Dom: lista x elemento
+;Rec: lista
+;Recursión: Natural. Motivo: Porque fue lo mas directo de realizar.
 (define (add-tail L N)
     (if (null? L)
         (cons N null)
         (cons (car L) (add-tail (cdr L) N))))
 
 
-; Aplica un criterio f a una lista l, creando nueva lista con los elementos que 
-
+;Desc: Aplica un criterio f a una lista l, creando nueva lista con los elementos que 
+;Dom: funcion x lista
+;Rec: lista
+;Recursión: Natural. Motivo: Porque fue lo mas directo al momento de pensar la implementación.
 (define generic-filter
   (lambda (f l)
     (if (null? l)
@@ -51,7 +61,9 @@
 
 
 ;Verifica si el elemento E pertenece a la lista L
-
+;Dom: lista x elemento de la lista
+;Rec: Bool
+;Recursión: De cola. Motivo: Porque fue lo mas directo al momento de pensar la implementación.
 (define memberOf
   (lambda (L E)
     (if (null? L)
@@ -60,11 +72,10 @@
             #t
             (memberOf (cdr L) E)))))
 
-
+;Desc: Función para crear una fecha
+;Dom: number x number x number
+;Rec: lista
 (define date
   (lambda (d m a)
     (cons d (cons m (cons a null)))))
-
-
-(define tag list)
 

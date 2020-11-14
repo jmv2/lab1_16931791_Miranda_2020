@@ -9,6 +9,9 @@
 
 ;Constructor
 
+;Desc: Constructor de TDA Question 
+;Dom: number x string x list x string x list x number x boolean
+;Rec: Question
 (define (Question questionId author Date questionBody labels reward state)
   (if (and
        (and (string? author))
@@ -21,53 +24,73 @@
 
 ;Pertenencia
 
+;Desc: Función de pertenencia de Question 
+;Dom: Question
+;Rec: Boolean
 (define (Question? question)
   (and (list? question)(= (length question) 8)(equal? "Q" (car question))))
   
 
 ;Selectores
 
-;retorna el id de la pregunta
+;Desc: retorna el id de la pregunta
+;Dom: question
+;Rec: number
 (define get-question-id
   (lambda (question)
     (cadr question)))
 
-;retorna el id del autor de la pregunta
+;Desc: retorna el autor de la pregunta
+;Dom: question
+;Rec: string
 (define get-question-author
   (lambda (question)
     (caddr question)))
 
-
-; retorna la fecha de la pregunta
+;Desc: retorna la fecha de la pregunta
+;Dom: question
+;Rec: list
 (define get-question-date
   (lambda (question)
     (elementFromList question 4))) ; Obtiene el cuarto elemento de la lista
 
-; funcion que retorna el contenido de la pregunta
 
+;Desc: funcion que retorna el contenido de la pregunta
+;Dom: question
+;Rec: string
 (define get-question-body
   (lambda (question)
     (cadddr (reverse question))))
 
-; Función que retorna la lista de los tags de la pregunta
 
+;Desc: Función que retorna la lista de los tags de la pregunta
+;Dom: question
+;Rec: list
 (define get-question-labels
   (lambda (question)
     (caddr (reverse question))))
 
-; retorna la recompensa de la pregunta. Si el valor es cero, no tiene recompensa.
+
+;Desc: retorna la recompensa de la pregunta. Si el valor es cero, no tiene recompensa.
+;Dom: question
+;Rec: number
 (define get-question-reward
   (lambda (question)
     (cadr(reverse question))))
 
+
+;Desc: Función que retrna el estado un pregunta dada
+;Dom: question
+;Rec: boolean
 (define get-question-state
   (lambda (question)
     (car (reverse question))))
 
 ;Modificadores
 
-; Modifica el valor de la recompensa de la pregunta
-
+;Desc: Modifica el valor de la recompensa de la pregunta
+;Dom: question
+;Rec: question
 (define set-question-reward
   (lambda (question reward)
     (Question
@@ -79,8 +102,9 @@
      reward
      (get-question-state question))))
 
-
-
+;Desc: función de cambia el estado de una pregunta
+;Dom: question
+;Rec: question
 (define set-question-state
   (lambda (question state)
     (Question
