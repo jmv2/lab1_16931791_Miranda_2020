@@ -2,7 +2,7 @@
 
 (provide myReverse elementFromList date tag add-tail generic-filter quitarElementoLista memberOf)
 
-;Otras funciones complementarias  transversales
+;Otras funciones complementarias  transversales. Funciones sin contexto para ser usadas a través del programa.
 
 ;Desc: función que dada una lista invierte su orden 
 ;Dom: lista
